@@ -184,6 +184,7 @@
    :columns 90
    :set 100
    :from 110
+   :using 115
    :join 120
    :left-join 130
    :right-join 140
@@ -411,6 +412,9 @@
 
 (defmethod format-clause :from [[_ tables] _]
   (str "FROM " (comma-join (map to-sql tables))))
+
+(defmethod format-clause :using [[_ tables] _]
+  (str "USING " (comma-join (map to-sql tables))))
 
 (defmethod format-clause :where [[_ pred] _]
   (str "WHERE " (format-predicate* pred)))

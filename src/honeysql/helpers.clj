@@ -38,8 +38,15 @@
 (defhelper from [m tables]
   (assoc m :from (collify tables)))
 
+(defhelper using [m tables]
+  (assoc m :using (collify tables)))
+
 (defhelper merge-from [m tables]
   (update-in m [:from] concat (collify tables)))
+
+(defhelper merge-using [m tables]
+  (update-in m [:using] concat (collify tables)))
+
 
 (defmethod build-clause :where [_ m pred]
   (if (nil? pred)
