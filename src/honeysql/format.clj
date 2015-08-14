@@ -115,6 +115,9 @@
                                " AS "
                                (to-sql cast-to-type)))))
 
+(defmethod fn-handler "~" [_ a b & more]
+  (str (to-sql a) " ~ " (to-sql b)))
+
 (defmethod fn-handler "=" [_ a b & more]
   (if (seq more)
     (apply expand-binary-ops "=" a b more)
