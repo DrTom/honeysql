@@ -73,7 +73,9 @@
 (def infix-fns
   #{"+" "-" "*" "/" "%" "mod" "|" "&" "^"
     "and" "or" "xor"
-    "in" "not in" "like" "not like" "regexp"})
+    "in" "not in" "like" "not like" "regexp"
+    "<@" ">@"
+    })
 
 (def fn-aliases
   {"is" "="
@@ -507,7 +509,7 @@
 
 (defmethod format-clause :delete-from [[_ table] _]
   (str "DELETE FROM " (to-sql table)))
-  
+
 (defn cte->sql
   [[cte-name query]]
   (str (to-sql cte-name) " AS " (to-sql query)))
