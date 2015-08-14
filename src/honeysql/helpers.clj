@@ -26,6 +26,9 @@
 (defhelper select [m fields]
   (assoc m :select (collify fields)))
 
+(defhelper returning [m fields]
+  (assoc m :returning (collify fields)))
+
 (defhelper merge-select [m fields]
   (update-in m [:select] concat (collify fields)))
 
@@ -224,7 +227,7 @@
 (defn delete-from
   ([table] (delete-from nil table))
   ([m table] (build-clause :delete-from m table)))
-  
+
 (defmethod build-clause :with [_ m ctes]
   (assoc m :with ctes))
 

@@ -189,6 +189,7 @@
    :right-join 140
    :full-join 150
    :where 160
+   :returning 165
    :group-by 170
    :having 180
    :order-by 190
@@ -502,6 +503,14 @@
 
 (defmethod format-clause :query-values [[_ query-values] _]
   (to-sql query-values))
+
+(defmethod format-clause :returning [[_ fields] sql-map]
+  (str "RETURNING "
+       (when (:modifiers sql-map)
+         (str (space-join (map (comp string/upper-case name)
+                               (:modifiers sql-map)))
+              " "))
+       (comma-join (map to-sql fields))))
 
 (defmethod format-clause :update [[_ table] _]
   (str "UPDATE " (to-sql table)))
