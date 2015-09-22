@@ -13,6 +13,7 @@
 (defalias sql-merge-join helpers/merge-join)
 (defalias sql-merge-left-join helpers/merge-left-join)
 (defalias sql-merge-where helpers/merge-where)
+(defalias sql-merge-modifiers helpers/merge-modifiers)
 (defalias sql-offset helpers/offset)
 (defalias sql-order-by helpers/order-by)
 (defalias sql-raw types/raw)
