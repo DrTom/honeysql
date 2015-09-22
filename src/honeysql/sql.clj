@@ -11,6 +11,7 @@
 (defalias sql-from helpers/from)
 (defalias sql-limit helpers/limit)
 (defalias sql-merge-join helpers/merge-join)
+(defalias sql-merge-left-join helpers/merge-left-join)
 (defalias sql-merge-where helpers/merge-where)
 (defalias sql-offset helpers/offset)
 (defalias sql-order-by helpers/order-by)
