@@ -31,6 +31,9 @@
 (defhelper select [m fields]
   (assoc m :select (collify fields)))
 
+(defhelper returning [m fields]
+  (assoc m :returning (collify fields)))
+
 (defhelper merge-select [m fields]
   (update-in m [:select] concat (collify fields)))
 
@@ -40,8 +43,15 @@
 (defhelper from [m tables]
   (assoc m :from (collify tables)))
 
+(defhelper using [m tables]
+  (assoc m :using (collify tables)))
+
 (defhelper merge-from [m tables]
   (update-in m [:from] concat (collify tables)))
+
+(defhelper merge-using [m tables]
+  (update-in m [:using] concat (collify tables)))
+
 
 (defmethod build-clause :where [_ m pred]
   (if (nil? pred)
@@ -229,7 +239,7 @@
 (defn delete-from
   ([table] (delete-from nil table))
   ([m table] (build-clause :delete-from m table)))
-  
+
 (defmethod build-clause :with [_ m ctes]
   (assoc m :with ctes))
 

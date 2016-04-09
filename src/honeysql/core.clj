@@ -2,7 +2,7 @@
   (:refer-clojure :exclude [group-by format])
   (:require [honeysql.format :as format]
             [honeysql.types :as types]
-            [honeysql.helpers :refer [build-clause]]
+            [honeysql.helpers :as helpers :refer [build-clause]]
             [honeysql.util :refer [defalias]]
             [clojure.string :as string]))
 
@@ -12,6 +12,20 @@
 (defalias format format/format)
 (defalias format-predicate format/format-predicate)
 (defalias quote-identifier format/quote-identifier)
+
+(defalias delete-from helpers/delete-from)
+(defalias from helpers/from)
+(defalias join helpers/join)
+(defalias limit helpers/limit)
+(defalias merge-join helpers/merge-join)
+(defalias merge-where helpers/merge-where)
+(defalias modifiers helpers/modifiers)
+(defalias offset helpers/offset)
+(defalias order-by helpers/order-by)
+(defalias returning helpers/returning)
+(defalias select helpers/select)
+(defalias using helpers/using)
+(defalias where helpers/where)
 
 (defn qualify
   "Takes one or more keyword or string qualifers and name. Returns

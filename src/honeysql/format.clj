@@ -76,7 +76,9 @@
 (def infix-fns
   #{"+" "-" "*" "/" "%" "mod" "|" "&" "^"
     "and" "or" "xor"
-    "in" "not in" "like" "not like" "regexp"})
+    "in" "not in" "like" "not like" "regexp"
+    "<@" ">@"
+    })
 
 (def fn-aliases
   {"is" "="
@@ -115,6 +117,9 @@
   (str "CAST" (paren-wrap (str (to-sql field)
                                " AS "
                                (to-sql cast-to-type)))))
+
+(defmethod fn-handler "~" [_ a b & more]
+  (str (to-sql a) " ~ " (to-sql b)))
 
 (defmethod fn-handler "=" [_ a b & more]
   (if (seq more)
@@ -182,11 +187,13 @@
    :columns 90
    :set 100
    :from 110
+   :using 115
    :join 120
    :left-join 130
    :right-join 140
    :full-join 150
    :where 160
+   :returning 165
    :group-by 170
    :having 180
    :order-by 190
@@ -410,6 +417,9 @@
 (defmethod format-clause :from [[_ tables] _]
   (str "FROM " (comma-join (map to-sql tables))))
 
+(defmethod format-clause :using [[_ tables] _]
+  (str "USING " (comma-join (map to-sql tables))))
+
 (defmethod format-clause :where [[_ pred] _]
   (str "WHERE " (format-predicate* pred)))
 
@@ -501,6 +511,14 @@
 
 (defmethod format-clause :query-values [[_ query-values] _]
   (to-sql query-values))
+
+(defmethod format-clause :returning [[_ fields] sql-map]
+  (str "RETURNING "
+       (when (:modifiers sql-map)
+         (str (space-join (map (comp string/upper-case name)
+                               (:modifiers sql-map)))
+              " "))
+       (comma-join (map to-sql fields))))
 
 (defmethod format-clause :update [[_ table] _]
   (str "UPDATE " (to-sql table)))
